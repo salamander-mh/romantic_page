@@ -51,27 +51,37 @@
     </div>
 
     <script>
-        function timer() {
-            var start = new Date(2018, 5, 6);
-            var t = new Date() - start;
-            var h = ~~(t / 1000 / 60 / 60 % 24);
-            if (h < 10) {
-                h = "0" + h;
-            }
-            var m = ~~(t / 1000 / 60 % 60);
-            if (m < 10) {
-                m = "0" + m;
-            }
+        var dayMillionSecs = 1000 * 60 * 60 * 24;
+        var hourMillionSecs = 1000 * 60 * 60;
+        var minuteMillionSecs = 1000 * 60;
+        var secondMillionSecs = 1000;
 
-            var s = ~~(t / 1000 % 60);
-            if (s < 10) {
-                s = "0" + s;
-            }
-            document.getElementById('d').innerHTML = ~~(t / 1000 / 60 / 60 / 24);
-            document.getElementById('h').innerHTML = h;
-            document.getElementById('m').innerHTML = m;
-            document.getElementById('s').innerHTML = s;
+        function format(arg) {
+            if (arg < 10)
+                return '0' + arg;
+            else
+                return '' + arg;
         }
+
+        function timer() {
+            var start = new Date(2018, 4, 6); // 5月6号
+            var now = new Date();
+            var inter = now - start;
+            var days = Math.floor(inter / dayMillionSecs);
+            inter = inter % dayMillionSecs;
+            var hours = Math.floor(inter / hourMillionSecs);
+            inter = inter % hourMillionSecs;
+            var minutes = Math.floor(inter / minuteMillionSecs);
+            inter = inter % minuteMillionSecs;
+            var seconds = Math.floor(inter / secondMillionSecs);
+
+
+            document.getElementById('d').innerHTML = format(days);
+            document.getElementById('h').innerHTML = format(hours);
+            document.getElementById('m').innerHTML = format(minutes);
+            document.getElementById('s').innerHTML = format(seconds);
+        }
+
         timer();
         setInterval(timer, 1000);
     </script>
